@@ -1,0 +1,78 @@
+﻿@model Album
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Album @Model.AlbumName</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Изменение альбома</h3>
+
+        @using (Html.BeginForm("Edit", "Albums", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @Html.HiddenFor(m => m.Album_id)
+                <p class="gray">
+                    @Html.LabelFor(m => m.AlbumName, "Название альбома")
+                    <br />
+                    @Html.TextBoxFor(m => m.AlbumName, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                    @Html.ValidationMessageFor(model => model.AlbumName)
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.ReleaseDate, "Дата Релиза")
+                    <br />
+                    @Html.EditorFor(m => m.ReleaseDate, "", new { @class = "date-picker" })
+                    @*@Html.TextBoxFor(m => m.ReleaseDate, new { @class = "form-control", @style = "background-color: transparent; color: white", @placeholder = "YYYY.MM.DD", @required = "required" })*@
+                    @Html.ValidationMessageFor(model => model.ReleaseDate)
+                    <script type="text/javascript">
+                        $(function () {
+                            // This will make every element with the class "date-picker" into a DatePicker element
+                            $('.date-picker').datepicker();
+                        })
+                    </script>
+                    @Html.ValidationMessageFor(model => model.ReleaseDate)               
+                </p>
+
+                <p class="gray">
+                    @Html.LabelFor(m => m.Artist_id, "Исполнитель")
+                    <br />
+                    @Html.DropDownListFor(m => m.Artist_id, ViewBag.Artists as SelectList, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.Genre_id, "Жанр")
+                    <br />
+                    @Html.DropDownListFor(m => m.Genre_id, ViewBag.Genres as SelectList, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                </p>
+                <p class="gray">
+                    Список песен
+                </p>
+                <a id="toggler" href="#">Показать</a>
+                <div id="box" style="display: none;" class="gray">
+                    @foreach (var c in ViewBag.Songs)
+                    {
+                        <input class="gray" type="checkbox" name="selectedSongs" value="@c.Song_id" @(Model.Song.Contains(c) ? "checked=\"checked\"" : "") />@c.SongName <br />
+                    }
+                </div>
+
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button>Вернуться на Главную</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    
+    <script src="/Content/hideandseek.js" ></script>
+</body>
+</html>

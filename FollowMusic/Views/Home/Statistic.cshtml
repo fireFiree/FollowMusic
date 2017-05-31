@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Statistic";
+}
+
+<h2 class="gray">Cтатистика</h2>
+
+<div class="gray" style="background-color: rgba(0, 0, 0, 0.45); width: 100%; text-align: left;">
+    
+    <h4  style="text-align:center">Стастистика на @ViewBag.Date .</h4>
+    <p>Сервис <b>FollowMusic</b> насчитывает в своёй базе <b>@ViewBag.NumAlbums</b> альбомов, которые принадлежат <b>@ViewBag.NumArtists</b> исполнителям.</p>
+    <p><b>@ViewBag.NumUsers</b> пользователей уже успели сделать <b>@ViewBag.NumOrders</b> заказов в <b>@ViewBag.NumShops</b> мазазинах, сотрудничающик с нашим сервисов.</p>
+    <p>Все эти пользователи создали уже около <b>@ViewBag.NumPL</b>, в которых они могу использовать <b>@ViewBag.NumSongs</b> песен, хранящихся в базе нашего сервиса.</p>
+    <p> Так же наша система сотрудничает с <b>@ViewBag.NumLabels</b> лейблами.</p>
+</div>
+
+@using (Html.BeginForm("Report","Home"))
+{
+    <button>Сохранить статистику.</button>
+}

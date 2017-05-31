@@ -1,0 +1,64 @@
+﻿@model Orders
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Order</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Изменение Заказа</h3>
+
+       
+
+        @using (Html.BeginForm("Edit", "Orders", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @Html.HiddenFor(m => m.Order_id)
+                <p class="gray">
+                    @Html.LabelFor(m => m.OrderDate, "Дата заказа")
+                    <br />
+                    @Html.TextBoxFor(m => m.OrderDate, new { @class = "form-control", @style = "background-color: transparent; color: white", @placeholder = "YYYY.MM.DD" })
+                    @Html.ValidationMessageFor(m => m.OrderDate)
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.User_id, "Пользователь")
+                    <br />
+                    @Html.DropDownListFor(m => m.User_id, ViewBag.Users as SelectList, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.Album_id, "Альбом")
+                    <br />
+                    @Html.DropDownListFor(m => m.Album_id, ViewBag.Albums as SelectList, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.Status_id, "Статус")
+                    <br />
+                    @Html.DropDownListFor(m => m.Status_id, ViewBag.Status as SelectList, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.Shop_id, "Магазин")
+                    <br />
+                    @Html.DropDownListFor(m => m.Shop_id, ViewBag.Shops as SelectList, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                </p>
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button name="action" value="toIndex">Вернуться на Главную</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    
+</body>
+</html>
+

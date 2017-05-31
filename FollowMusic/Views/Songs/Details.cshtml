@@ -1,0 +1,60 @@
+﻿@model Song
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.SongName</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Подробное описание @Model.SongName</h3>
+        <div style="background-color: rgba(0, 0, 0, 0.51); width:400px">
+            <p class="gray" style="font-size:16px; font-weight:600;">Название:</p>
+            <p class="gray" style="font-size:14px; font-weight:300;">@Model.SongName</p>
+            <p class="gray" style="font-size:16px; font-weight:600;">Длительность:</p>
+            <p class="gray" style="font-size:14px; font-weight:300;">@Model.Duration</p>
+        </div>
+        <p class="gray" style="font-size:16px; font-weight:600;">Cписок альбомов:</p>
+        <a id="toggler" href="#">Показать</a>
+        <div class="gray" id="box" style="display: none;">
+            <table style=" width: 400px">
+                @foreach (var b in Model.Album)
+                {
+                    <tr>
+                        <td>
+                            <p>@b.AlbumName</p>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <p class="gray" style="font-size:16px; font-weight:600;">Cписок Плейлистов</p>
+        <a id="toggler1" href="#">Показать</a>
+        <div class="gray" id="box1" style="display: none;">
+        <table style=" width: 400px">
+            @foreach (var b in Model.Playlist)
+            {
+                <tr>
+                    <td>
+                        <p>@b.PlaylistName</p>
+                    </td>
+                </tr>
+            }
+        </table>
+        </div>
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button>Вернуться на Главную</button>
+        }
+    </div>
+
+</body>
+</html>

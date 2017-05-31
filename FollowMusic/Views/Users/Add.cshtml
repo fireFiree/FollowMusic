@@ -1,0 +1,54 @@
+﻿@model UsersDB
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add User</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Изменение пользователя</h3>
+
+        
+        @using (Html.BeginForm("Add", "Users", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @Html.HiddenFor(m => m.User_id)
+                <p class="gray">
+                    @Html.LabelFor(m => m.UserName, "Имя Пользователя")
+                    <br />
+                    @Html.EditorFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.UserNickName, "Никнейм")
+                    <br />
+                    @Html.EditorFor(m => m.UserNickName)
+                    @Html.ValidationMessageFor(m => m.UserNickName)
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.UserConcacts, "Контактная информация")
+                    <br />
+                    @Html.EditorFor(m => m.UserConcacts)
+                    @Html.ValidationMessageFor(m => m.UserConcacts)
+                </p>
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button name="action" value="toIndex">Вернуться на Главную</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    
+</body>
+</html>

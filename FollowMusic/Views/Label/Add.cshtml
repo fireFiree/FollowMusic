@@ -1,0 +1,50 @@
+﻿@model Label
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Label</title>
+</head>
+<body>
+    <h3 class="gray">Добавление Лейбла</h3>
+
+    @using (Html.BeginForm("Add", "Label", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            @Html.HiddenFor(m => m.Label_id)
+            <p class="gray">
+                @Html.LabelFor(m => m.Label_name, "Название")
+                <br />
+                @Html.EditorFor(m => m.Label_name)
+                @Html.ValidationMessageFor(m => m.Label_name)
+            </p>
+            <p class="gray">
+                @Html.LabelFor(m => m.Countries, "Страны")
+                <br />
+                @Html.EditorFor(m => m.Countries)
+                @Html.ValidationMessageFor(m => m.Countries)
+            </p>
+            <p class="gray">
+                @Html.LabelFor(m => m.Description, "Описание")
+                <br />
+                @Html.EditorFor(m => m.Description)
+                @Html.ValidationMessageFor(m => m.Description)
+            </p>
+
+            <p><input type="submit" value="Отправить" /></p>
+        </fieldset>
+    }
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <button name="action" value="toIndex">Вернуться на Главную</button>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>

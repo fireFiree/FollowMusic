@@ -1,0 +1,64 @@
+﻿@model Shop
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Shop</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Изменение магазина @Model.ShopName</h3>
+
+        
+        @using (Html.BeginForm("Edit", "Shops", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @Html.HiddenFor(m => m.Shop_id)
+                <p class ="gray">
+                    @Html.LabelFor(m => m.ShopName, "Название магазина")
+                    <br />
+                    @Html.EditorFor(m => m.ShopName)
+                    @Html.ValidationMessageFor(m => m.ShopName)
+                </p>
+                <p class ="gray">
+                    @Html.LabelFor(m => m.ShopCountry, "Страна")
+                    <br />
+                    @Html.EditorFor(m => m.ShopCountry)
+                    @Html.ValidationMessageFor(m => m.ShopCountry)
+
+                </p>
+                <p class ="gray">
+                    @Html.LabelFor(m => m.ShopCity, "Город")
+                    <br />
+                    @Html.EditorFor(m => m.ShopCity)
+                    @Html.ValidationMessageFor(m => m.ShopCity)
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.ShopContact, "Контактная информация")
+                    <br />
+                    @Html.EditorFor(m => m.ShopContact)
+                    @Html.ValidationMessageFor(m => m.ShopContact)
+                </p>
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+        @using (Html.BeginForm("toIndexAction", "Home", FormMethod.Post))
+        {
+            //<input type="text" name="product"/><br/>
+            <button name="action" value="toIndex">Вернуться на Главную</button>
+            //<button name="action" value="toAdvisers">Перейти к руководителям</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    
+</body>
+</html>
+

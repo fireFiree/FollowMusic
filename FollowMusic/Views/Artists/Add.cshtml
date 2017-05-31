@@ -1,0 +1,58 @@
+﻿@model Artist
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Artist</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Добавление Исполнителя</h3>
+
+        @using (Html.BeginForm("Add", "Artists", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <<fieldset>
+                @Html.HiddenFor(m => m.Artist_id)
+                <p class ="gray">
+                    @Html.LabelFor(m => m.ArtistName, "Исполнитель")
+                    <br />
+                    @Html.EditorFor(m => m.ArtistName)
+                    @Html.ValidationMessageFor(model => model.ArtistName)
+                    
+                </p>
+                <p class ="gray">
+                    @Html.LabelFor(m => m.Country, "Страна")
+                    <br />
+                    @Html.EditorFor(m => m.Country)
+                    @Html.ValidationMessageFor(model => model.Country)
+
+                    
+
+                </p>
+                <p class ="gray">
+                    @Html.LabelFor(m => m.Biography, "Биография")
+                    <br />
+                    @Html.EditorFor(m => m.Biography)
+                    @Html.ValidationMessageFor(model => model.Biography)
+                    
+                </p>
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button name="action" value="toIndex">Вернуться на Главную</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    
+</body>
+</html>

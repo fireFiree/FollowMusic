@@ -1,0 +1,60 @@
+﻿@model Playlist
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Playlist</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Добавление плейлиста</h3>
+
+        @using (Html.BeginForm("Add", "Playlists", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @Html.HiddenFor(m => m.Playlist_id)
+                <p class="gray">
+                    @Html.LabelFor(m => m.PlaylistName, "Название плейлиста")
+                    <br />
+                    @Html.EditorFor(m => m.PlaylistName)
+                    @Html.ValidationMessageFor(m => m.PlaylistName)
+                </p>
+                @Html.Hidden("User_id", @ViewBag.UserId as string)
+                @*<p class="gray">
+                    @Html.LabelFor(m => m.Users.UserName, "Имя пользователя")
+                    <br />
+                    @Html.DropDownListFor(m => m.User_id, ViewBag.Playlists as SelectList, new {@class = "form-control", @style = "background-color: transparent; color: white" })
+                </p>*@
+                <p class="gray">
+                    Песни
+                </p>
+                <div class="gray">
+                    <a id="toggler" href="#">Список песен</a>
+                    <div class="gray" id="box" style="display: none;">
+                        @foreach (var c in ViewBag.Songs)
+                        {
+                            <input type="checkbox" name="selectedSongs" value="@c.Song_id" /> @c.SongName <br />
+                        }
+                    </div>
+                </div>
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button name="action" value="toIndex">Вернуться на Главную</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    
+    <script src="/Content/hideandseek.js"></script>
+</body>
+</html>

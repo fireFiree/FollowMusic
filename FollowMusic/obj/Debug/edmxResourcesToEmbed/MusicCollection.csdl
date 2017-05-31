@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MusiccollectionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Album">
+    <Key>
+      <PropertyRef Name="Album_id" />
+    </Key>
+    <Property Name="Album_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AlbumName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
+    <Property Name="Artist_id" Type="Int32" />
+    <Property Name="Genre_id" Type="Int32" />
+    <Property Name="Label_id" Type="Int32" />
+    <NavigationProperty Name="Artist" Relationship="Self.FK_Album_Artist" FromRole="Album" ToRole="Artist" />
+    <NavigationProperty Name="Genre" Relationship="Self.FK_Album_Genre" FromRole="Album" ToRole="Genre" />
+    <NavigationProperty Name="Label" Relationship="Self.FK_Album_Label" FromRole="Album" ToRole="Label" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Album" FromRole="Album" ToRole="Orders" />
+    <NavigationProperty Name="Song" Relationship="Self.AlbumSong" FromRole="Album" ToRole="Song" />
+  </EntityType>
+  <EntityType Name="Artist">
+    <Key>
+      <PropertyRef Name="Artist_id" />
+    </Key>
+    <Property Name="Artist_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ArtistName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Biography" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Album" Relationship="Self.FK_Album_Artist" FromRole="Artist" ToRole="Album" />
+  </EntityType>
+  <EntityType Name="Genre">
+    <Key>
+      <PropertyRef Name="Genre_id" />
+    </Key>
+    <Property Name="Genre_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GenreName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Descripition" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Album" Relationship="Self.FK_Album_Genre" FromRole="Genre" ToRole="Album" />
+  </EntityType>
+  <EntityType Name="Label">
+    <Key>
+      <PropertyRef Name="Label_id" />
+    </Key>
+    <Property Name="Label_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Label_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Countries" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Album" Relationship="Self.FK_Album_Label" FromRole="Label" ToRole="Album" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_id" />
+    </Key>
+    <Property Name="Order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderDate" Type="DateTime" Precision="0" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+    <Property Name="Status_id" Type="Int32" Nullable="false" />
+    <Property Name="Shop_id" Type="Int32" />
+    <Property Name="Album_id" Type="Int32" />
+    <NavigationProperty Name="Album" Relationship="Self.FK_Orders_Album" FromRole="Orders" ToRole="Album" />
+    <NavigationProperty Name="Status" Relationship="Self.FK_Order_Status" FromRole="Orders" ToRole="Status" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Order_User" FromRole="Orders" ToRole="Users" />
+    <NavigationProperty Name="Shop" Relationship="Self.FK_Orders_Shop" FromRole="Orders" ToRole="Shop" />
+  </EntityType>
+  <EntityType Name="Playlist">
+    <Key>
+      <PropertyRef Name="Playlist_id" />
+    </Key>
+    <Property Name="Playlist_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlaylistName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Playlist_Users" FromRole="Playlist" ToRole="Users" />
+    <NavigationProperty Name="Song" Relationship="Self.SongPlaylist" FromRole="Playlist" ToRole="Song" />
+  </EntityType>
+  <EntityType Name="Shop">
+    <Key>
+      <PropertyRef Name="Shop_id" />
+    </Key>
+    <Property Name="Shop_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShopName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ShopCountry" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ShopCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ShopContact" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Shop" FromRole="Shop" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Song">
+    <Key>
+      <PropertyRef Name="Song_id" />
+    </Key>
+    <Property Name="Song_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SongName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Duration" Type="Int32" />
+    <NavigationProperty Name="Album" Relationship="Self.AlbumSong" FromRole="Song" ToRole="Album" />
+    <NavigationProperty Name="Playlist" Relationship="Self.SongPlaylist" FromRole="Song" ToRole="Playlist" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Status_id" />
+    </Key>
+    <Property Name="Status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="FAQ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Status" FromRole="Status" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserConcacts" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Order_User" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Playlist" Relationship="Self.FK_Playlist_Users" FromRole="Users" ToRole="Playlist" />
+  </EntityType>
+  <Association Name="FK_Album_Artist">
+    <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
+    <End Role="Album" Type="Self.Album" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artist">
+        <PropertyRef Name="Artist_id" />
+      </Principal>
+      <Dependent Role="Album">
+        <PropertyRef Name="Artist_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Album_Genre">
+    <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+    <End Role="Album" Type="Self.Album" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="Genre_id" />
+      </Principal>
+      <Dependent Role="Album">
+        <PropertyRef Name="Genre_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Album_Label">
+    <End Role="Label" Type="Self.Label" Multiplicity="0..1" />
+    <End Role="Album" Type="Self.Album" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Label">
+        <PropertyRef Name="Label_id" />
+      </Principal>
+      <Dependent Role="Album">
+        <PropertyRef Name="Label_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Album">
+    <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Album">
+        <PropertyRef Name="Album_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Album_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Status_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_User">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Shop">
+    <End Role="Shop" Type="Self.Shop" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="Shop_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Shop_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Playlist_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Playlist" Type="Self.Playlist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Playlist">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AlbumSong">
+    <End Role="Album" Type="Self.Album" Multiplicity="*" />
+    <End Role="Song" Type="Self.Song" Multiplicity="*" />
+  </Association>
+  <Association Name="SongPlaylist">
+    <End Role="Playlist" Type="Self.Playlist" Multiplicity="*" />
+    <End Role="Song" Type="Self.Song" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="MusiccollectionEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Album" EntityType="Self.Album" />
+    <EntitySet Name="Artist" EntityType="Self.Artist" />
+    <EntitySet Name="Genre" EntityType="Self.Genre" />
+    <EntitySet Name="Label" EntityType="Self.Label" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="Playlist" EntityType="Self.Playlist" />
+    <EntitySet Name="Shop" EntityType="Self.Shop" />
+    <EntitySet Name="Song" EntityType="Self.Song" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Album_Artist" Association="Self.FK_Album_Artist">
+      <End Role="Artist" EntitySet="Artist" />
+      <End Role="Album" EntitySet="Album" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Album_Genre" Association="Self.FK_Album_Genre">
+      <End Role="Genre" EntitySet="Genre" />
+      <End Role="Album" EntitySet="Album" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Album_Label" Association="Self.FK_Album_Label">
+      <End Role="Label" EntitySet="Label" />
+      <End Role="Album" EntitySet="Album" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Album" Association="Self.FK_Orders_Album">
+      <End Role="Album" EntitySet="Album" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Status" Association="Self.FK_Order_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Shop" Association="Self.FK_Orders_Shop">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Playlist_Users" Association="Self.FK_Playlist_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Playlist" EntitySet="Playlist" />
+    </AssociationSet>
+    <AssociationSet Name="AlbumSong" Association="Self.AlbumSong">
+      <End Role="Album" EntitySet="Album" />
+      <End Role="Song" EntitySet="Song" />
+    </AssociationSet>
+    <AssociationSet Name="SongPlaylist" Association="Self.SongPlaylist">
+      <End Role="Playlist" EntitySet="Playlist" />
+      <End Role="Song" EntitySet="Song" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

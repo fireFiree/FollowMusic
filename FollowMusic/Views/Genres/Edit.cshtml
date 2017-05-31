@@ -1,0 +1,50 @@
+﻿@model Genre
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Изменение жанра @Model.GenreName</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Изменение жанра</h3>
+
+        @using (Html.BeginForm("Edit", "Genres", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @Html.HiddenFor(m => m.Genre_id)
+                <p class ="gray">
+                    @Html.LabelFor(m => m.GenreName, "Жанр")
+                    <br />
+                    @Html.EditorFor(m => m.GenreName)
+                    @Html.ValidationMessageFor(model => model.GenreName)
+                </p>
+                <p class ="gray">
+                    @Html.LabelFor(m => m.Descripition, "Описание")
+                    <br />
+                    @Html.EditorFor(m => m.Descripition)
+                    @Html.ValidationMessageFor(model => model.Descripition)
+                </p>
+          
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button name="action" value="toIndex">Вернуться на Главную</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    
+</body>
+</html>
+

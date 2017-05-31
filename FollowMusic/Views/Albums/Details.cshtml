@@ -1,0 +1,61 @@
+﻿@model Album
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.AlbumName</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Подробное описание @Model.AlbumName</h3>
+        <div style="background-color:rgba(0, 255, 255, 0.39); width:200px">
+            <p class="gray" style="font-size:16px; font-weight:600;">Альбом:</p>
+            <p class="gray" style="font-size:14px; font-weight:300;">@Model.AlbumName</p>
+            <p class="gray" style="font-size:16px; font-weight:600;">Исполнитель:</p>
+            <p class="gray" style="font-size:14px; font-weight:300;">@Model.Artist.ArtistName</p>
+            <p class="gray" style="font-size:16px; font-weight:600;">Дата Релиза:</p>
+            <p class="gray" style="font-size:14px; font-weight:300;">@Convert.ToDateTime(Model.ReleaseDate).ToString("dd/MM/yyyy")</p>
+            <p class="gray" style="font-size:16px; font-weight:600;">Жанр:</p>
+            <p class="gray" style="font-size:14px; font-weight:300;">@Model.Genre.GenreName</p>
+        </div>
+
+        <p class="gray" style="font-size:16px; font-weight:600;">Cписок песен:</p>
+        <a id="toggler" href="#">Показать</a>
+        <div id="box" style="display: none; ">
+
+            <table style=" width: 200px; background-color: rgba(0, 255, 255, 0.39);">
+                <tr>
+                    <td>
+                        @foreach (var b in Model.Song)
+                        {
+
+                            <p>@b.SongName</p>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+        <br />
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button name="action" value="toIndex">Вернуться на Главную</button>
+        }
+    </div>
+</body>
+</html>
+
+
+
+
+
+

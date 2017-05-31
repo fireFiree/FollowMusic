@@ -1,0 +1,119 @@
+﻿@*@model IEnumerable<Genre>*@
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Genre>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Genres</title>
+</head>
+<body>
+    <div>
+        <h3 class=" gray" >Список Жанров</h3>
+        @using (Html.BeginForm("Search", "Genres", FormMethod.Post))
+{
+    <table style="background-color:rgba(0, 0, 0, 0.51)">
+        <tr>
+            <td >
+                @Html.TextBox("data", "", new { @placeholder = "Поиск" })
+            </td>
+            <td align="right"  style="padding-right:20px;">
+                <input style="padding:0 30px" type="submit" value="Искать"  />
+            </td>
+        </tr>
+    </table>
+}
+        <table style="background-color:rgba(0, 0, 0, 0.51)" id="grid">
+            <thead>
+                <tr>
+                    <th data-type="number" id="sort">
+                        <img src="/Content/arrowUp.jpg" style="height:10px; width:10px " id="sort" data-type="number" />
+                        ID
+                    </th>
+                    <th data-type="string" id="sort">
+                        <img src="/Content/arrowUp.jpg" style="height:10px; width:10px " id="sort" data-type="string" />
+                        Жанр
+                    </th>
+                    <th>
+                        Описание
+                    </th>
+                    @if(User.IsInRole("admin"))
+                    { 
+                    <th>
+                        <a href="/Genres/Add"><img src="/Content/add.png" width="20" height="20" /></a>
+                    </th>
+                    }
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var b in Model)
+                {
+                    <tr>
+                        <td>
+                            @b.Genre_id
+                        </td>
+                        <td>
+                            @b.GenreName
+                        </td>
+                        <td>
+                            <p>@b.Descripition</p>
+                        </td>
+                        @if (User.IsInRole("admin")) { 
+                        <td>
+                            <p>
+                                <a href="/Genres/Edit/@b.Genre_id"><img src="/Content/edit.png" width="20" height="20"/></a>
+                            </p>
+                            <p>
+                                <a href="/Genres/Delete/@b.Genre_id" onclick="return confirm('Уверены?')"><img src="/Content/delete.png" width="20" height="20" /></a>
+                            </p>
+                        </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount
+
+        @if (Model.HasPreviousPage)
+        {
+            @Html.ActionLink("«", "Show", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, @class = "gray" })
+            @Html.Raw(" ");
+            @Html.ActionLink("< Prev", "Show", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, @class = "gray" })
+        }
+        else
+        {
+            @:«
+            @Html.Raw(" ");
+            @:< Prev
+}
+
+        @if (Model.HasNextPage)
+        {
+            @Html.ActionLink("Next >", "Show", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, @class = "navbar-brand" })
+            @Html.Raw(" ");
+            @Html.ActionLink("»", "Show", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, @class = "gray" })
+        }
+        else
+        {
+            @:Next >
+            @Html.Raw(" ")
+            @:»
+}
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button>Вернуться на Главную</button>
+        }
+    </div>
+    <script src="/Content/sortik.js"></script>
+</body>
+</html>
+

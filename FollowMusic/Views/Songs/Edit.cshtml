@@ -1,0 +1,81 @@
+﻿@model Song
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit_Song</title>
+</head>
+<body>
+    <div>
+        <h3 class="gray">Изменение Песни @Model.SongName</h3>
+
+        
+
+
+        @using (Html.BeginForm("Edit", "Songs", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <<fieldset>
+                @Html.HiddenFor(m => m.Song_id)
+                <p class="gray">
+                    @Html.LabelFor(m => m.SongName, "Название песни")
+                    <br />
+                    @Html.EditorFor(m => m.SongName)
+                    @Html.ValidationMessageFor(m => m.SongName)
+                </p>
+                <p class="gray">
+                    @Html.LabelFor(m => m.Duration, "Длительность")
+                    <br />
+                    @Html.TextBoxFor(m => m.Duration, new { @class = "form-control", @style = "background-color: transparent; color: white" })
+                    @Html.ValidationMessageFor(m => m.Duration)
+
+                </p>
+                <p><input type="submit" value="Отправить" /></p>
+            </fieldset>
+        }
+            <tr>
+                <td>
+                    <table style=" width: 700px; background-color: rgba(0, 0, 0, 0.51);">
+                        <tr>
+                            <th>
+                                <p>Список альбомов, в которые включена данная песня</p>
+                            </th>
+                            <th>
+                                <p>Список плейлистов, в которые включена данная песня</p>
+                            </th>
+                            </tr>
+                        <tr>
+                            <td>
+                                @foreach (var b in Model.Album)
+                                {
+                                    <p>@b.AlbumName</p>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var b in Model.Playlist)
+                                {
+                                    <p>@b.PlaylistName</p>
+                                }
+                            </td>
+                            </tr>
+                        </table>
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <button>Вернуться на Главную</button>
+        }
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    
+
+</body>
+</html>
+
